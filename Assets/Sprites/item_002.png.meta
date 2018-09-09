@@ -29,7 +29,7 @@ TextureImporter:
     21300044: item_002_22
     21300046: item_002_23
     21300048: item_002_24
-    21300050: item_sword
+    21300050: ii_sword
     21300052: item_002_26
     21300054: item_002_27
     21300056: item_002_28
@@ -154,7 +154,7 @@ TextureImporter:
     21300294: item_002_147
     21300296: item_002_148
     21300298: item_002_149
-    21300300: item_skull
+    21300300: ii_skull
     21300302: item_002_151
     21300304: item_002_152
     21300306: item_002_153
@@ -678,7 +678,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: item_sword
+      name: ii_sword
       rect:
         serializedVersion: 2
         x: 241
@@ -2428,7 +2428,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: item_skull
+      name: ii_skull
       rect:
         serializedVersion: 2
         x: 312
