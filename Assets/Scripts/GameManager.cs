@@ -3,90 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum StateGame{
-	Ready = 0, Gaming, Result
-}
-public class GameManager : MonoBehaviour {
-	public Text text;
-	StateGame state;
-	int count;
-	//public GameObject uiReady, uiGaming, uiResult;
-
-	void Awake () {
-		
+public class GameManager : FSM<GameManager.StateGame> {
+	public static GameManager ins { get; private set; }
+	public enum StateGame{
+		None, Ready, Gaming, Result
 	}
 
-	void Start(){
-		pInReady ();
+
+	void Awake(){
+		ins = this;
+	}
+
+	IEnumerator Start(){
+		//1. File Read, Data File Ready
+		//yield return null...
+		Debug.Log ("File Loading and Prefab Create");
+		yield return null;
+
+		//2. State Setting
+		AddState (StateGame.Ready, 		pInReady, 	null, 	null);
+		AddState (StateGame.Gaming, 	pInGaming, 	ModifyGaming, 	null);
+		AddState (StateGame.Result, 	pInResult, 	null, 	null);
+
+		//3. Ready 상태로 변경...
+		yield return null;
+		ChangeState(StateGame.Ready);
 	}
 
 	//--------------------------
 	void pInReady(){
-		state = StateGame.Ready;
-		text.text = "Ready";
-		UiReady.ins.InvokeVisible ();
+		UiReady.ins.InvokeShow ();
+		UiBottomMenu.ins.InvokeShow ();
 	}
 
-	void ModifyReady(){
-		if (Input.GetMouseButtonDown(0)) {
-			OutReady ();
-			pInGaming ();
-			return;
-		}
-		text.text = "Ready" + (count++).ToString();
-	}
-
-	void OutReady(){
-		UiReady.ins.InvokeInVisible ();
-	}
+	public void InvokeReadyToGaming(){
+		ChangeState(StateGame.Gaming);
+	}	
 
 	//--------------------------
 	void pInGaming(){
-		state = StateGame.Gaming;
-		text.text = "Gaming";
-		count = 0;
-		UiGaming.ins.InvokeVisible ();
+		Debug.Log ("게임에 필요한 데이타 로딩세팅");
+		SpawnManager.ins.CreateItemClick ();
 	}
 
 	void ModifyGaming(){
-		if (Input.GetMouseButtonDown(0)) {
-			pInResult ();
-			return;
-		}
-		text.text = "Gaming" + (count++).ToString();
+		//if (Input.GetMouseButtonDown(0)) {
+		//	ChangeState(StateGame.Result);
+		//	return;
+		//}
 	}
 	//--------------------------
 	void pInResult(){
-		state = StateGame.Result;
-		text.text = "Result";
-		count = 0;
-
-		UiGaming.ins.InvokeInVisible ();
-		UiResult.ins.InvokeVisible ();
+		Debug.Log ("게임완료 > 결과 출력.");		
+		UiResult.ins.InvokeShow ();
 	}
 
-	void ModifyResult(){
-		if (Input.GetMouseButtonDown(0)) {
-			UiResult.ins.InvokeInVisible ();
-			pInReady ();
-			return;
-		}
-		text.text = "Result" + (count++).ToString();
-	}
+	public void InvokeResultToReady(){
+		ChangeState(StateGame.Ready);
+	}	
 
 
-	// Update is called once per frame
-	void Update () {
-		switch (state) {
-		case StateGame.Ready:
-			ModifyReady ();
-			break;
-		case StateGame.Gaming:
-			ModifyGaming ();
-			break;
-		case StateGame.Result:
-			ModifyResult ();
-			break;
-		}
-	}
 }
