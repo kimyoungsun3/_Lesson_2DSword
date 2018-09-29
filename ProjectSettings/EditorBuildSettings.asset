@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scene/04_FSM_ScrollView.unity
+    guid: ecc8484cfeb766645b1eb35d17103c9a

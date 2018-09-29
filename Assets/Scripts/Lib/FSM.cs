@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public delegate void VOID_FUN_VOID();
+public delegate void VOID_FUN_INT(int _x);
+public delegate void VOID_FUN_STRING(string _str);
 
 public class FSMData<T>{
 	T state;

@@ -23,11 +23,15 @@ public class UiItemList : UiMaster {
 			_go.transform.SetParent (transRoot);
 			_scp = _go.GetComponent<ItemProduct> ();
 			if (_scp != null) {
-				_scp.InvokeSetInfo ("Sword" + (i+1), "sword_" + (i+1));
+				_scp.InitInfo ("Sword" + (i+1), "sword_" + (i+1), InvokeClickItem);
 				list.Add (_scp);			
 			}
 		}
 
 		DestroyImmediate (prefab);
+	}
+
+	public void InvokeClickItem(string _str){
+		Debug.Log ("ItemClick > " + _str);
 	}
 }

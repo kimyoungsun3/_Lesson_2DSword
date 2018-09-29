@@ -15,10 +15,12 @@ public class UiBottomMenu : UiMaster {
 
 	public void InvokeLeftBtn(){
 		Debug.Log ("InvokeLeftBtn Click");
+		SpawnManager.ins.ClickItemBall (ItemBallDir.Left);
 	}
 
 	public void InvokeRightBtn(){
 		Debug.Log ("InvokeRightBtn Click");
+		SpawnManager.ins.ClickItemBall (ItemBallDir.Right);
 	}
 
 	public void InvokeShowItemList(){

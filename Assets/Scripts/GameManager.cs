@@ -43,7 +43,7 @@ public class GameManager : FSM<GameManager.StateGame> {
 	//--------------------------
 	void pInGaming(){
 		Debug.Log ("게임에 필요한 데이타 로딩세팅");
-		SpawnManager.ins.CreateItemClick ();
+		SpawnManager.ins.CreateItemBallAll ();
 	}
 
 	void ModifyGaming(){
