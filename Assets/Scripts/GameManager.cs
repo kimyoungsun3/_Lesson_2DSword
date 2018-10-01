@@ -33,7 +33,7 @@ public class GameManager : FSM<GameManager.StateGame> {
 	//--------------------------
 	void pInReady(){
 		UiReady.ins.InvokeShow ();
-		UiBottomMenu.ins.InvokeShow ();
+		//UiBottomMenu.ins.InvokeShow ();
 	}
 
 	public void InvokeReadyToGaming(){
@@ -43,18 +43,22 @@ public class GameManager : FSM<GameManager.StateGame> {
 	//--------------------------
 	void pInGaming(){
 		Debug.Log ("게임에 필요한 데이타 로딩세팅");
+		UiBottomMenu.ins.InitAndVisible (true);
 		SpawnManager.ins.CreateItemBallAll ();
 	}
 
 	void ModifyGaming(){
-		//if (Input.GetMouseButtonDown(0)) {
-		//	ChangeState(StateGame.Result);
-		//	return;
-		//}
+		if(UiBottomMenu.ins.hpValue < 0f){
+			ChangeState(StateGame.Result);
+			return;
+		}
+		UiBottomMenu.ins.OnUpdate ();
 	}
 	//--------------------------
 	void pInResult(){
 		Debug.Log ("게임완료 > 결과 출력.");		
+		UiBottomMenu.ins.InitAndVisible (false);
+		SpawnManager.ins.ClearItemBallAll ();
 		UiResult.ins.InvokeShow ();
 	}
 

@@ -42,6 +42,18 @@ public class SpawnManager : MonoBehaviour {
 		}
 	}
 
+	public void ClearItemBallAll(){
+		//1. destroy itemball
+		for (int i = 0; i < list.Count; i++) {
+			DestroyImmediate( list [i].left.gameObject);
+			DestroyImmediate( list [i].right.gameObject);
+		}
+
+		//2. list data clear
+		list.Clear ();
+		cursorIndex = 0;
+	}
+
 	public void CreateItemBallOne(int _idx){
 		cursorIndex = _idx;
 
@@ -77,7 +89,8 @@ public class SpawnManager : MonoBehaviour {
 			list [i].Move ();
 	}
 
-	public void ClickItemBall(ItemBallDir _dir){
+	public bool ClickItemBall(ItemBallDir _dir){
+		bool _rtn = false;
 		//1. top data
 		ItemBall _scp;
 		if (_dir == ItemBallDir.Left) {
@@ -90,8 +103,10 @@ public class SpawnManager : MonoBehaviour {
 		//   gameobject destroy
 		if (_scp.CheckItemBall ()) {
 			Debug.Log ("Success >");
+			_rtn = true;
 		} else {
 			Debug.Log ("Fail >");
+			_rtn = false;
 		}
 
 		//3. data destroy and new Data Input
@@ -101,6 +116,8 @@ public class SpawnManager : MonoBehaviour {
 
 		//4. new Data Create
 		CreateItemBallOne(cursorIndex++);
+
+		return _rtn;
 	}
 
 	//public GameObject 	goBtnChange;
